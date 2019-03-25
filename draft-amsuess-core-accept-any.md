@@ -19,7 +19,7 @@ informative:
 
 --- abstract
 
-This memoy defines the Accept-Any option,
+This memo defines the Accept-Any option,
 which provides a more flexible content negotiation than the one originally specified
 for the Constrained Application Protocol (CoAP) in {{!RFC7252}}.
 As this is particularly useful with but ruled out in CoAP observation ({{!RFC7641}}),
