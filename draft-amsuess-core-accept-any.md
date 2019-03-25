@@ -1,6 +1,6 @@
 ---
 title: Accept-Any option for CoAP
-docname: draft-amsuess-core-accept-any
+docname: draft-amsuess-core-accept-any-latest
 stand_alone: true
 cat: std
 wg: CoRE
