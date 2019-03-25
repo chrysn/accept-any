@@ -32,7 +32,7 @@ that is updated to allow it.
 \[ This document is being developed in git at <https://github.com/chrysn/accept-any>. \]
 
 When CoAP content format defined in {{!RFC7252}},
-the choice was made to have the initial content negotiation allow the client to only pick zero or one content formats.
+the choice was made to have the initial content negotiation allow the client to only pick zero or one content format.
 This is a good choice for many situations
 and ensures that proxies can cache as much as possible without added complexity.
 A client that does not know a usable content format would either leave the request field absent,
@@ -46,7 +46,7 @@ to carry the same content format in the notification as in the original response
 For applications that expect a representation to change its representability to change during an observation's lifetime,
 {{?I-D.ietf-core-multipart-ct}} introduces a way of wrapping responses in an application/multipart-core response.
 That approach is convenient for bags of representations,
-but lacks actual content negotiation again
+but lacks actual content negotiation
 and produces representations that are not directly usable
 but need to be processed from inside the multipart representation.
 
@@ -62,8 +62,8 @@ why but follow Accept here \], safe-to-foward and part of the cache key.
 Its format is uint up to 2 long (indicating content types), it is Class
 E in OSCORE, usable in requests only, and repeatable
 
-(Repeatability is the only aspect in which it differs from Accept in
-terms of option properties).
+Repeatability is the only aspect in which it differs from Accept in
+terms of option properties.
 
 Its values indicate a list of acceptable representations in order of
 decreasing preference. A server MUST answer with the first format it can
@@ -78,14 +78,15 @@ Instead, a single Accept option is used.
 Proxy behavior
 --------------
 
-A proxy MAY ignore this option per its properties,
+A proxy MAY ignore this option per its properties
+(and serve a cached response if the cache key matches),
 but can implement additional behavior to enhance its cache.
 
-A proxy MAY serve a cached representation to a request with a different
+A proxy is allowed to serve a cached representation to a request with a different
 sequence of Accept-Any options, provided the second request has an
 Accept value of the cached representation, or all the content formats
 that precede the available content format in the second request's
-Accept-Any options also preceded the available representation in an
+Accept-Any options also preceded the available representation in any
 earlier (fresh) request's list.
 
 When a request that carries Accept-Any is answered 4.06 (or with any
@@ -99,6 +100,9 @@ respectively).
 Update to RFC7641
 =================
 
+Changed behavior
+----------------
+
 The requirement that subsequent notifications carry the same
 Content-Format option as the original response ({{!RFC7641}} Section 3.2) is lifted.
 
@@ -107,10 +111,16 @@ Rationale
 
 Observing resources whose available representations changed is a key featuer of Accept-Any,
 and necessary to implement pub-sub topics that have no initial value
-(but a "null" representation with a dedicated content format).
+(but a "null" representation with a dedicated content format)
+without losing content negotiation and direct usability of the response.
 
 The requirement was introduced initially before such content negotiation was thought of,
 and is not a necessary part to the remainder of the observation document.
+
+As long as the limitation is in place,
+the origin server has no clear action guidance
+when its resource changes the available content formats
+(see below).
 
 Impact
 ------
