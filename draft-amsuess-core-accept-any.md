@@ -131,7 +131,8 @@ Changes to the returned media type can either happen when
   next notification (or close the connection in TCP).
 
   Applications are still free to require constant content formats;
-  clients would treat what could previously 
+  clients would treat what could previously be treated as a protocol error
+  would now treat it as an application error.
 
 Impact on proxies: A proxy that enforces the previous rule on
 Content-Format staying constant would close observations (probably with
