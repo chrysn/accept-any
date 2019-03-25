@@ -29,7 +29,7 @@ that is updated to allow it.
 
 # Introduction
 
-\[ This document is being developed in git at https://github.com/chrysn/accept-any \]
+\[ This document is being developed in git at <https://github.com/chrysn/accept-any>. \]
 
 When CoAP content format defined in {{!RFC7252}},
 the choice was made to have the initial content negotiation allow the client to only pick zero or one content formats.
@@ -89,9 +89,9 @@ Accept-Any options also preceded the available representation in an
 earlier (fresh) request's list.
 
 When a request that carries Accept-Any is answered 4.06 (or with any
-but the first format requested by Accept-Any in its Content-Format), a proxy SHOULD [ we
+but the first format requested by Accept-Any in its Content-Format), a proxy SHOULD \[ we
 can't have a MUST here w/o making it non-safe-to-forward, but I think
-it's sufficient ] invalidate all known representations in any of the
+it's sufficient \] invalidate all known representations in any of the
 requested formats (or the formats preceeding the returned one,
 respectively).
 
