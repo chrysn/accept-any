@@ -29,6 +29,8 @@ that is updated to allow it.
 
 # Introduction
 
+\[ This document is being developed in git at https://github.com/chrysn/accept-any \]
+
 When CoAP content format defined in {{!RFC7252}},
 the choice was made to have the initial content negotiation allow the client to only pick zero or one content formats.
 This is a good choice for many situations
