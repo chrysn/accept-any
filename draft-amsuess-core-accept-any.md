@@ -29,6 +29,13 @@ that is updated to allow it.
 
 # Introduction
 
+\[ This document is currently not being developed any further,
+primarily because its original main use case (empty values in pubsub)
+is now addressed differently (see https://github.com/core-wg/pubsub/blob/master/proposal.txt).
+The approach should still be viable
+but is not followed up on for lack of need. \]
+
+
 \[ This document is being developed in git at <https://github.com/chrysn/accept-any>. \]
 
 When CoAP content format defined in {{!RFC7252}},
