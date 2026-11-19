@@ -24,21 +24,16 @@ informative:
 This memo defines the Accept-Any option,
 which provides a more flexible content negotiation than the one originally specified
 for the Constrained Application Protocol (CoAP) in {{!RFC7252}}.
-As this is particularly useful with but ruled out in CoAP observation ({{!RFC7641}}),
+As this is particularly useful with, but ruled out in, CoAP observation ({{!RFC7641}}),
 that is updated to allow it.
 
 --- middle
 
 # Introduction
 
-\[ This document is currently not being developed any further,
-primarily because its original main use case (empty values in pubsub)
-is now addressed differently (see https://github.com/core-wg/pubsub/blob/master/proposal.txt).
-The approach should still be viable
-but is not followed up on for lack of need. \]
-
-
-\[ This document is being developed in git at <https://github.com/chrysn/accept-any>. \]
+\[ This document is document has been revised from the original 2019 version
+after pub-sub moved away from desiring non-crated states,
+and moved back to that during AD review in 2026. \]
 
 When CoAP content format defined in {{!RFC7252}},
 the choice was made to have the initial content negotiation allow the client to only pick zero or one content format.
@@ -69,7 +64,7 @@ The Accept-Any option
 A new option Accept-Any is defined. It is critical \[ I don't fully see
 why but follow Accept here \], safe-to-foward and part of the cache key.
 Its format is uint up to 2 long (indicating content types), it is Class
-E in OSCORE, usable in requests only, and repeatable
+E in OSCORE, usable in requests only, and repeatable.
 
 Repeatability is the only aspect in which it differs from Accept in
 terms of option properties.
@@ -118,7 +113,7 @@ Content-Format option as the original response ({{!RFC7641}} Section 3.2) is lif
 Rationale
 ---------
 
-Observing resources whose available representations changed is a key featuer of Accept-Any,
+Observing resources whose available representations changed is a key feature of Accept-Any,
 and necessary to implement pub-sub topics that have no initial value
 (but a "null" representation with a dedicated content format)
 without losing content negotiation and direct usability of the response.
