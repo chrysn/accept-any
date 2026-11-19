@@ -7,12 +7,10 @@ wg: CoRE
 updates: 7641
 kw: CoAP, observe
 author:
-- ins: C. Amsüss
+-
+  ins: C. Amsüss
   name: Christian Amsüss
-  street: Hollandstr. 12/4
-  code: '1020'
   country: Austria
-  phone: "+43-664-9790639"
   email: christian@amsuess.com
 normative:
 informative:
