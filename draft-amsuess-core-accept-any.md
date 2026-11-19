@@ -1,11 +1,15 @@
 ---
+v: 3
 title: Accept-Any option for CoAP
 docname: draft-amsuess-core-accept-any-latest
-stand_alone: true
-cat: std
-wg: CoRE
+category: std
+workgroup: CoRE
 updates: 7641
-kw: CoAP, observe
+keyword: [CoAP, observe]
+venue:
+  group: Constrained RESTful Environments
+  mail: core@ietf.org
+  github: chrysn/accept-any
 author:
 -
   ins: C. Amsüss
