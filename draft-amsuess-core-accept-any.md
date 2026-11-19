@@ -162,3 +162,36 @@ behavior.
 
 * Is there any value in having an Accept-All option in parallel to this option
   that asks for a multipart response that contains all the representations?
+
+# Comaparison with 2.06 No Content
+
+This document was revived with minimal modifications (mostly the addition of this appendix)
+as a response to {{?I-D.jimenez-core-coap-no-content-00}}.
+
+To serve the same purpose as that document for the current {{?I-D.ietf-core-coap-pubsub}}:
+
+- Only the relaxation of {{RFC7641}} is needed, not the added Accept-Any option: A pubsub resource only has a single topic-content-format anyway.
+  (Accept-Any would become relevant if pub-sub were extended to cater for multiple media types;
+  if relevant, this document might be changed to give it `,*/*;q=0.1` semantics).
+- The null media type hinted at (and the corresponding content format) would need to be added to this document;
+  the next section gives a possible definition.
+
+It is the author's impression that this document's approach can solve the same issue as no-content,
+but with less impact on the REST model underlying CoAP
+(in that "exists but has no value" does not become a new state).
+More convenient aspects of this approach are that a null media type can easily be PUT into a resource
+(as opposed to introducing a variant of DELETE that just affects the content but not the resource as a whole),
+and that it opens for additional states that can be represented in new media types
+(e.g. a generic "tombstone" type that can be placed in a resource to indicate that there is no fresh representation, but possibly tells a bit about the history).
+
+## Suggested media type
+
+The multipart/empty media type indicates an empty set of available alternatives.
+
+* Type name: multipart
+* Subtype name: empty
+* Required parameters: N/A
+* Optional parameters: N/A
+* Encoding considerations: This media type only describes empty representations.
+* Applications that use this media type: {{?I-D.ietf-core-coap-pubsub}} (if applied)
+* Intended usage: limited use -- in applications where the absence of content in a resource is distinct from the resource not existing at all.
