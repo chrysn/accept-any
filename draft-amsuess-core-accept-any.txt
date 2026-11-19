@@ -17,7 +17,7 @@ Abstract
    This memo defines the Accept-Any option, which provides a more
    flexible content negotiation than the one originally specified for
    the Constrained Application Protocol (CoAP) in [RFC7252].  As this is
-   particularly useful with but ruled out in CoAP observation
+   particularly useful with, but ruled out in, CoAP observation
    ([RFC7641]), that is updated to allow it.
 
 About This Document
@@ -79,19 +79,15 @@ Table of Contents
      4.1.  Normative References
      4.2.  Informative References
    Appendix A.  Open questions
+   Appendix B.  Comaparison with 2.06 No Content
+     B.1.  Suggested media type
    Author's Address
 
 1.  Introduction
 
-   [ This document is currently not being developed any further,
-   primarily because its original main use case (empty values in pubsub)
-   is now addressed differently (see https://github.com/core-
-   wg/pubsub/blob/master/proposal.txt).  The approach should still be
-   viable but is not followed up on for lack of need. ]
-
-   [ This document is being developed in git at
-   https://github.com/chrysn/accept-any (https://github.com/chrysn/
-   accept-any). ]
+   [ This document is document has been revised from the original 2019
+   version after pub-sub moved away from desiring non-crated states, and
+   moved back to that during AD review in 2026. ]
 
    When CoAP content format defined in [RFC7252], the choice was made to
    have the initial content negotiation allow the client to only pick
@@ -124,7 +120,7 @@ Table of Contents
    see why but follow Accept here ], safe-to-foward and part of the
    cache key.  Its format is uint up to 2 long (indicating content
    types), it is Class E in OSCORE, usable in requests only, and
-   repeatable
+   repeatable.
 
    Repeatability is the only aspect in which it differs from Accept in
    terms of option properties.
@@ -170,7 +166,7 @@ Table of Contents
 3.2.  Rationale
 
    Observing resources whose available representations changed is a key
-   featuer of Accept-Any, and necessary to implement pub-sub topics that
+   feature of Accept-Any, and necessary to implement pub-sub topics that
    have no initial value (but a "null" representation with a dedicated
    content format) without losing content negotiation and direct
    usability of the response.
@@ -228,6 +224,14 @@ Table of Contents
 
 4.2.  Informative References
 
+   [I-D.ietf-core-coap-pubsub]
+              Jimenez, J., Koster, M., and A. Keränen, "A publish-
+              subscribe architecture for the Constrained Application
+              Protocol (CoAP)", Work in Progress, Internet-Draft, draft-
+              ietf-core-coap-pubsub-22, 2 November 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-core-
+              coap-pubsub-22>.
+
    [I-D.ietf-core-multipart-ct]
               Fossati, T., Hartke, K., and C. Bormann, "Multipart
               Content-Format for the Constrained Application Protocol
@@ -235,6 +239,14 @@ Table of Contents
               core-multipart-ct-04, 21 August 2019,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
               multipart-ct-04>.
+
+   [I-D.jimenez-core-coap-no-content-00]
+              Jimenez, J. and C. Bormann, "The 2.06 (No Content)
+              Response Code for the Constrained Application Protocol
+              (CoAP)", Work in Progress, Internet-Draft, draft-jimenez-
+              core-coap-no-content-00, 2 November 2026,
+              <https://datatracker.ietf.org/doc/html/draft-jimenez-core-
+              coap-no-content-00>.
 
 Appendix A.  Open questions
 
@@ -244,6 +256,60 @@ Appendix A.  Open questions
    *  Is there any value in having an Accept-All option in parallel to
       this option that asks for a multipart response that contains all
       the representations?
+
+Appendix B.  Comaparison with 2.06 No Content
+
+   This document was revived with minimal modifications (mostly the
+   addition of this appendix) as a response to
+   [I-D.jimenez-core-coap-no-content-00].
+
+   To serve the same purpose as that document for the current
+   [I-D.ietf-core-coap-pubsub]:
+
+   *  Only the relaxation of [RFC7641] is needed, not the added Accept-
+      Any option: A pubsub resource only has a single topic-content-
+      format anyway.  (Accept-Any would become relevant if pub-sub were
+      extended to cater for multiple media types; if relevant, this
+      document might be changed to give it ,*/*;q=0.1 semantics).
+
+   *  The null media type hinted at (and the corresponding content
+      format) would need to be added to this document; the next section
+      gives a possible definition.
+
+   It is the author's impression that this document's approach can solve
+   the same issue as no-content, but with less impact on the REST model
+   underlying CoAP (in that "exists but has no value" does not become a
+   new state).  More convenient aspects of this approach are that a null
+   media type can easily be PUT into a resource (as opposed to
+   introducing a variant of DELETE that just affects the content but not
+   the resource as a whole), and that it opens for additional states
+   that can be represented in new media types (e.g. a generic
+   "tombstone" type that can be placed in a resource to indicate that
+   there is no fresh representation, but possibly tells a bit about the
+   history).
+
+B.1.  Suggested media type
+
+   The multipart/empty media type indicates an empty set of available
+   alternatives.
+
+   *  Type name: multipart
+
+   *  Subtype name: empty
+
+   *  Required parameters: N/A
+
+   *  Optional parameters: N/A
+
+   *  Encoding considerations: This media type only describes empty
+      representations.
+
+   *  Applications that use this media type: [I-D.ietf-core-coap-pubsub]
+      (if applied)
+
+   *  Intended usage: limited use -- in applications where the absence
+      of content in a resource is distinct from the resource not
+      existing at all.
 
 Author's Address
 

@@ -10,7 +10,7 @@
        This memo defines the Accept-Any option,
 which provides a more flexible content negotiation than the one originally specified
 for the Constrained Application Protocol (CoAP) in  .
-As this is particularly useful with but ruled out in CoAP observation ( ),
+As this is particularly useful with, but ruled out in, CoAP observation ( ),
 that is updated to allow it. 
     " name="description">
 <meta content="xml2rfc 3.35.0" name="generator">
@@ -1086,7 +1086,7 @@ svg {
 <p id="section-abstract-1">This memo defines the Accept-Any option,
 which provides a more flexible content negotiation than the one originally specified
 for the Constrained Application Protocol (CoAP) in <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.
-As this is particularly useful with but ruled out in CoAP observation (<span>[<a href="#RFC7641" class="cite xref">RFC7641</a>]</span>),
+As this is particularly useful with, but ruled out in, CoAP observation (<span>[<a href="#RFC7641" class="cite xref">RFC7641</a>]</span>),
 that is updated to allow it.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
@@ -1192,7 +1192,15 @@ that is updated to allow it.<a href="#section-abstract-1" class="pilcrow">¶</a>
             <p id="section-toc.1-1.5.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-open-questions" class="internal xref">Open questions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-comaparison-with-206-no-con" class="internal xref">Comaparison with 2.06 No Content</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#appendix-B.1" class="auto internal xref">B.1</a>.  <a href="#name-suggested-media-type" class="internal xref">Suggested media type</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1203,30 +1211,27 @@ that is updated to allow it.<a href="#section-abstract-1" class="pilcrow">¶</a>
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">[ This document is currently not being developed any further,
-primarily because its original main use case (empty values in pubsub)
-is now addressed differently (see https://github.com/core-wg/pubsub/blob/master/proposal.txt).
-The approach should still be viable
-but is not followed up on for lack of need. ]<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">[ This document is being developed in git at <a href="https://github.com/chrysn/accept-any">https://github.com/chrysn/accept-any</a>. ]<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">When CoAP content format defined in <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>,
+<p id="section-1-1">[ This document is document has been revised from the original 2019 version
+after pub-sub moved away from desiring non-crated states,
+and moved back to that during AD review in 2026. ]<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">When CoAP content format defined in <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>,
 the choice was made to have the initial content negotiation allow the client to only pick zero or one content format.
 This is a good choice for many situations
 and ensures that proxies can cache as much as possible without added complexity.
 A client that does not know a usable content format would either leave the request field absent,
 indicating it would accept any response,
-or try several acceptble values in a series of requests.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">In line with that choice,
+or try several acceptble values in a series of requests.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">In line with that choice,
 observation (<span>[<a href="#RFC7641" class="cite xref">RFC7641</a>]</span>) required notification responses
-to carry the same content format in the notification as in the original response.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">For applications that expect a representation to change its representability to change during an observation's lifetime,
+to carry the same content format in the notification as in the original response.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">For applications that expect a representation to change its representability to change during an observation's lifetime,
 <span>[<a href="#I-D.ietf-core-multipart-ct" class="cite xref">I-D.ietf-core-multipart-ct</a>]</span> introduces a way of wrapping responses in an application/multipart-core response.
 That approach is convenient for bags of representations,
 but lacks actual content negotiation
 and produces representations that are not directly usable
-but need to be processed from inside the multipart representation.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">This document introduces an additional way for the client to indicate its set of acceptable content formats,
-and removes the same-content-format limitation during observation.<a href="#section-1-6" class="pilcrow">¶</a></p>
+but need to be processed from inside the multipart representation.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">This document introduces an additional way for the client to indicate its set of acceptable content formats,
+and removes the same-content-format limitation during observation.<a href="#section-1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="the-accept-any-option">
@@ -1237,7 +1242,7 @@ and removes the same-content-format limitation during observation.<a href="#sect
 <p id="section-2-1">A new option Accept-Any is defined. It is critical [ I don't fully see
 why but follow Accept here ], safe-to-foward and part of the cache key.
 Its format is uint up to 2 long (indicating content types), it is Class
-E in OSCORE, usable in requests only, and repeatable<a href="#section-2-1" class="pilcrow">¶</a></p>
+E in OSCORE, usable in requests only, and repeatable.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">Repeatability is the only aspect in which it differs from Accept in
 terms of option properties.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <p id="section-2-3">Its values indicate a list of acceptable representations in order of
@@ -1291,7 +1296,7 @@ Content-Format option as the original response (<span>[<a href="#RFC7641" class=
         <h3 id="name-rationale">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-rationale" class="section-name selfRef">Rationale</a>
         </h3>
-<p id="section-3.2-1">Observing resources whose available representations changed is a key featuer of Accept-Any,
+<p id="section-3.2-1">Observing resources whose available representations changed is a key feature of Accept-Any,
 and necessary to implement pub-sub topics that have no initial value
 (but a "null" representation with a dedicated content format)
 without losing content negotiation and direct usability of the response.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
@@ -1368,9 +1373,17 @@ behavior.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-core-coap-pubsub">[I-D.ietf-core-coap-pubsub]</dt>
+        <dd>
+<span class="refAuthor">Jimenez, J.</span>, <span class="refAuthor">Koster, M.</span>, and <span class="refAuthor">A. Keränen</span>, <span class="refTitle">"A publish-subscribe architecture for the Constrained Application Protocol (CoAP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-coap-pubsub-22</span>, <time datetime="2026-11-02" class="refDate">2 November 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-coap-pubsub-22">https://datatracker.ietf.org/doc/html/draft-ietf-core-coap-pubsub-22</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-core-multipart-ct">[I-D.ietf-core-multipart-ct]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Hartke, K.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Multipart Content-Format for the Constrained Application Protocol (CoAP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-multipart-ct-04</span>, <time datetime="2019-08-21" class="refDate">21 August 2019</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-multipart-ct-04">https://datatracker.ietf.org/doc/html/draft-ietf-core-multipart-ct-04</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.jimenez-core-coap-no-content-00">[I-D.jimenez-core-coap-no-content-00]</dt>
+      <dd>
+<span class="refAuthor">Jimenez, J.</span> and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"The 2.06 (No Content) Response Code for the Constrained Application Protocol (CoAP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-jimenez-core-coap-no-content-00</span>, <time datetime="2026-11-02" class="refDate">2 November 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-jimenez-core-coap-no-content-00">https://datatracker.ietf.org/doc/html/draft-jimenez-core-coap-no-content-00</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1393,8 +1406,67 @@ that asks for a multipart response that contains all the representations?<a href
       </ul>
 </section>
 </div>
-<div id="authors-addresses">
+<div id="comaparison-with-206-no-content">
 <section id="appendix-B">
+      <h2 id="name-comaparison-with-206-no-con">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-comaparison-with-206-no-con" class="section-name selfRef">Comaparison with 2.06 No Content</a>
+      </h2>
+<p id="appendix-B-1">This document was revived with minimal modifications (mostly the addition of this appendix)
+as a response to <span>[<a href="#I-D.jimenez-core-coap-no-content-00" class="cite xref">I-D.jimenez-core-coap-no-content-00</a>]</span>.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">To serve the same purpose as that document for the current <span>[<a href="#I-D.ietf-core-coap-pubsub" class="cite xref">I-D.ietf-core-coap-pubsub</a>]</span>:<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-3.1">
+          <p id="appendix-B-3.1.1">Only the relaxation of <span>[<a href="#RFC7641" class="cite xref">RFC7641</a>]</span> is needed, not the added Accept-Any option: A pubsub resource only has a single topic-content-format anyway.
+(Accept-Any would become relevant if pub-sub were extended to cater for multiple media types;
+if relevant, this document might be changed to give it <code>,*/*;q=0.1</code> semantics).<a href="#appendix-B-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-3.2">
+          <p id="appendix-B-3.2.1">The null media type hinted at (and the corresponding content format) would need to be added to this document;
+the next section gives a possible definition.<a href="#appendix-B-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-4">It is the author's impression that this document's approach can solve the same issue as no-content,
+but with less impact on the REST model underlying CoAP
+(in that "exists but has no value" does not become a new state).
+More convenient aspects of this approach are that a null media type can easily be PUT into a resource
+(as opposed to introducing a variant of DELETE that just affects the content but not the resource as a whole),
+and that it opens for additional states that can be represented in new media types
+(e.g. a generic "tombstone" type that can be placed in a resource to indicate that there is no fresh representation, but possibly tells a bit about the history).<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+<div id="suggested-media-type">
+<section id="appendix-B.1">
+        <h3 id="name-suggested-media-type">
+<a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-suggested-media-type" class="section-name selfRef">Suggested media type</a>
+        </h3>
+<p id="appendix-B.1-1">The multipart/empty media type indicates an empty set of available alternatives.<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B.1-2.1">
+            <p id="appendix-B.1-2.1.1">Type name: multipart<a href="#appendix-B.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-2.2">
+            <p id="appendix-B.1-2.2.1">Subtype name: empty<a href="#appendix-B.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-2.3">
+            <p id="appendix-B.1-2.3.1">Required parameters: N/A<a href="#appendix-B.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-2.4">
+            <p id="appendix-B.1-2.4.1">Optional parameters: N/A<a href="#appendix-B.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-2.5">
+            <p id="appendix-B.1-2.5.1">Encoding considerations: This media type only describes empty representations.<a href="#appendix-B.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-2.6">
+            <p id="appendix-B.1-2.6.1">Applications that use this media type: <span>[<a href="#I-D.ietf-core-coap-pubsub" class="cite xref">I-D.ietf-core-coap-pubsub</a>]</span> (if applied)<a href="#appendix-B.1-2.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-2.7">
+            <p id="appendix-B.1-2.7.1">Intended usage: limited use -- in applications where the absence of content in a resource is distinct from the resource not existing at all.<a href="#appendix-B.1-2.7.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-C">
       <h2 id="name-authors-address">
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
